@@ -26,6 +26,12 @@ Go to **Graylog Admin Interface** -> **System** -> **Content Packs** then click 
 
 [![screen1](https://i.ibb.co/mhrzLXM/Schermata-2020-03-27-alle-22-28-39.png)](https://i.ibb.co/mhrzLXM/Schermata-2020-03-27-alle-22-28-39.png)
 
+## Geolocation
+
+Follow the instructions to install and enable [Graylog Geolocation](http://docs.graylog.org/en/3.2/pages/geolocation.html) and create your *dashboard*.
+
+[![screen2](https://i.ibb.co/yR2D7wk/gl2dash.png)](https://i.ibb.co/yR2D7wk/gl2dash.png)
+
 ## Contributors
 
 GROK pattern was inspired from:
