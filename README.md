@@ -3,34 +3,56 @@
 [![license](https://img.shields.io/badge/license-MIT-green)](https://choosealicense.com/licenses/mit/)
 
 This content pack install a *pipeline* (with pipeline rules) and a *grok* pattern.  
-This *pipeline* parse **fail2ban** log file with a GROK pattern to create *fields* such as *clientip* to use with [Graylog Geolocation](http://docs.graylog.org/en/3.2/pages/geolocation.html).
+This *pipeline* parse **fail2ban** log received with a GROK pattern to create *fields* such as *clientip* to use with [Graylog Geolocation](http://docs.graylog.org/en/3.2/pages/geolocation.html).
 
 ## Example message
 
-	2020-03-27 20:16:27,162 fail2ban.actions  [2667]: NOTICE [sshd] Ban 1.1.1.1
+```text
+2020-03-27 20:16:27,162 fail2ban.actions  [2667]: NOTICE [sshd] Ban 1.1.1.1
+```
 
 ## Fields
 
-	f2b_timestamp: 2018-02-09 10:05:21,431
-	action: Ban
-	clientip: 1.1.1.1
-	digit: 2667
-	log_level: NOTICE
-	method: actions
-	service: sshd
-	src_app: fail2ban
+```text
+f2b_timestamp: 2018-02-09 10:05:21,431
+action: Ban
+clientip: 1.1.1.1
+digit: 2667
+log_level: NOTICE
+method: actions
+service: sshd
+src_app: fail2ban
+```
+
+## Input
+
+I personally use *filebeat* to collect logs.  
+To better filter logs this *pipeline rule* search for specific additional field called **log_application** with the value of **fail2ban**.
+
+You can customize this *field* as you want editing *content-pack.json*
+
+```json
+"source": {
+	"@type": "string",
+	"@value": "rule \"Is Fail2ban\"\nwhen\n has_field(\"log_application\") and to_string($message.log_application) == \"fail2ban\"\nthen\nend"
+}
+```
+
+You can add additional custom fields directly from Graylog Beats Input Configuration
+
+[![screen1](.img/gl2beats.png)](.img/gl2beats.png)
 
 ## Installation
 
 Go to **Graylog Admin Interface** -> **System** -> **Content Packs** then click **Upload** button and select *content-pack.json* file.
 
-[![screen1](https://i.ibb.co/xDsbjDh/gl2cp.png)](https://i.ibb.co/xDsbjDh/gl2cp.png)
+[![screen1](.img/gl2cp.png)](.img/gl2cp.png)
 
 ## Geolocation
 
-Follow the instructions to install and enable [Graylog Geolocation](http://docs.graylog.org/en/3.2/pages/geolocation.html) and create your *dashboard*.
+Follow the instructions to enable [Graylog Geolocation](http://docs.graylog.org/en/3.2/pages/geolocation.html) and you will be able to create your *dashboard*.
 
-[![screen2](https://i.ibb.co/yR2D7wk/gl2dash.png)](https://i.ibb.co/yR2D7wk/gl2dash.png)
+[![screen2](.img/gl2dash.png)](.img/gl2dash.png)
 
 ## Contributors
 
